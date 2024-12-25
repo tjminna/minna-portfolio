@@ -91,10 +91,9 @@ a, button, .MuiCard-root {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: rgb(231, 77, 60);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(207, 31, 11);
 }
