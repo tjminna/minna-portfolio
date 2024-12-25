@@ -1,0 +1,150 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.snap-section {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.app-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .snap-section {
+    min-height: 100vh; /* Change from fixed height to min-height for mobile */
+    height: auto;
+    padding: 60px 20px;
+  }
+
+  /* Adjust scroll indicator for mobile */
+  .MuiBox-root[style*="position: fixed"][style*="right: 20px"] {
+    right: 10px !important;
+    transform: scale(0.8) translateY(-50%) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further adjustments for smaller screens */
+  .snap-section {
+    padding: 40px 15px;
+  }
+
+  /* Make scroll indicator even smaller on mobile */
+  .MuiBox-root[style*="position: fixed"][style*="right: 20px"] {
+    transform: scale(0.7) translateY(-50%) !important;
+    right: 5px !important;
+  }
+
+  /* Adjust typography for better mobile reading */
+  .MuiTypography-h2 {
+    font-size: 2rem !important;
+  }
+
+  .MuiTypography-h4 {
+    font-size: 1.5rem !important;
+  }
+
+  .MuiTypography-h6 {
+    font-size: 1.1rem !important;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .app-container {
+    scroll-snap-type: y proximity; /* Less strict snapping for touch devices */
+  }
+
+  /* Improve touch targets */
+  .MuiIconButton-root {
+    padding: 12px !important;
+  }
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+  .snap-section {
+    min-height: 120vh; /* Ensure content is properly visible in landscape */
+  }
+
+  /* Adjust scroll indicator position in landscape */
+  .MuiBox-root[style*="position: fixed"][style*="right: 20px"] {
+    transform: scale(0.7) translateY(-50%) !important;
+    right: 10px !important;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper borders for retina displays */
+  .MuiBox-root[style*="position: fixed"][style*="right: 20px"] {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .snap-section {
+    height: auto;
+    page-break-inside: avoid;
+  }
+
+  .MuiBox-root[style*="position: fixed"] {
+    display: none !important;
+  }
+}
