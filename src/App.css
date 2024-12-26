@@ -3,6 +3,7 @@ html, body {
   padding: 0;
   overflow: hidden;
   height: 100vh;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M12 2l2 28h4l2-28h-8z' fill='%23e74c3c'/%3E%3C/svg%3E") 16 0, auto;
 }
 
 .App {
@@ -57,6 +58,62 @@ html, body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Custom cursor */
+body {
+  cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSg0NSwgMTYsIDE2KSI+PHJlY3QgeD0iMTQiIHk9IjE2IiB3aWR0aD0iNCIgaGVpZ2h0PSIxNCIgZmlsbD0iIzhCNDUxMyIvPjxwYXRoIGQ9Ik0xNiAyIEwxOSA4IEwxNiAxNCBMMTMgOCBaIiBmaWxsPSIjZTc0YzNjIi8+PGNpcmNsZSBjeD0iMTYiIGN5PSI0IiByPSIxIiBmaWxsPSIjRkZENzAwIi8+PC9nPjwvc3ZnPg==') 16 2, auto !important;
+}
+
+/* Clickable elements cursor */
+a, button, [role="button"], .MuiIconButton-root, input[type="button"], input[type="submit"], input[type="reset"] {
+  cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSg0NSwgMTYsIDE2KSI+PHJlY3QgeD0iMTQiIHk9IjE2IiB3aWR0aD0iNCIgaGVpZ2h0PSIxNCIgZmlsbD0iIzhCNDUxMyIvPjxwYXRoIGQ9Ik0xNiAyIEwxOSA4IEwxNiAxNCBMMTMgOCBaIiBmaWxsPSIjZmZkNzAwIi8+PGNpcmNsZSBjeD0iMTYiIGN5PSI0IiByPSIxIiBmaWxsPSIjRkZENzAwIi8+PC9nPjwvc3ZnPg==') 16 2, pointer !important;
+}
+
+a:hover, button:hover, [role="button"]:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M12 2l2 28h4l2-28h-8z' fill='gold'/%3E%3C/svg%3E") 16 0, pointer;
+}
+
+/* For Safari and older browsers */
+@supports (-moz-appearance:none) {
+  body {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSg0NSwgMTYsIDE2KSI+PHJlY3QgeD0iMTQiIHk9IjE2IiB3aWR0aD0iNCIgaGVpZ2h0PSIxNCIgZmlsbD0iIzhCNDUxMyIvPjxwYXRoIGQ9Ik0xNiAyIEwxOSA4IEwxNiAxNCBMMTMgOCBaIiBmaWxsPSIjZTc0YzNjIi8+PGNpcmNsZSBjeD0iMTYiIGN5PSI0IiByPSIxIiBmaWxsPSIjRkZENzAwIi8+PC9nPjwvc3ZnPg==') 16 2, auto !important;
+  }
+}
+
+/* Sparkle Animation */
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* Cursor sparkle element */
+.cursor-sparkle {
+  pointer-events: none;
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  will-change: transform;
+  transform: translate(-50%, -50%);
+}
+
+.sparkle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, #FFD700 0%, rgba(255, 215, 0, 0) 70%);
+  animation: sparkle 700ms ease-in-out infinite;
+}
+
+.sparkle:nth-child(1) { animation-delay: -200ms; }
+.sparkle:nth-child(2) { animation-delay: -400ms; }
+.sparkle:nth-child(3) { animation-delay: -600ms; }
+
+/* Make sure cursor is applied to all elements */
+* {
+  cursor: inherit;
 }
 
 /* Responsive styles */

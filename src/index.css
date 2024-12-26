@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-45, 16, 16)'%3E%3Crect x='14' y='12' width='4' height='18' fill='%23663300'/%3E%3Cpath d='M16 2L19 7L16 12L13 7z' fill='%23FFD700'/%3E%3Ccircle cx='16' cy='4' r='1.5' fill='white'/%3E%3Ccircle cx='13' cy='7' r='1' fill='white'/%3E%3Ccircle cx='19' cy='7' r='1' fill='white'/%3E%3C/g%3E%3C/svg%3E") 16 2, auto;
 }
 
 body {
@@ -76,6 +77,28 @@ html {
   animation: blink 1s step-end infinite;
 }
 
+a, button, [role="button"], .MuiIconButton-root, input[type="button"], input[type="submit"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-45, 16, 16)'%3E%3Crect x='14' y='12' width='4' height='18' fill='%23663300'/%3E%3Cpath d='M16 2L19 7L16 12L13 7z' fill='%23e74c3c'/%3E%3Ccircle cx='16' cy='4' r='1.5' fill='%23FFD700'/%3E%3Ccircle cx='13' cy='7' r='1' fill='%23FFD700'/%3E%3Ccircle cx='19' cy='7' r='1' fill='%23FFD700'/%3E%3C/g%3E%3C/svg%3E") 16 2, pointer;
+}
+
+/* Ensure cursor works in all browsers */
+@supports (-moz-appearance:none) {
+  * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-45, 16, 16)'%3E%3Crect x='14' y='12' width='4' height='18' fill='%23663300'/%3E%3Cpath d='M16 2L19 7L16 12L13 7z' fill='%23FFD700'/%3E%3Ccircle cx='16' cy='4' r='1.5' fill='white'/%3E%3Ccircle cx='13' cy='7' r='1' fill='white'/%3E%3Ccircle cx='19' cy='7' r='1' fill='white'/%3E%3C/g%3E%3C/svg%3E") 16 2, auto;
+  }
+}
+
+/* Fallback for unsupported browsers */
+@media not all and (min-resolution:.001dpcm) { 
+  * {
+      cursor: default;
+  }
+  
+  a, button, [role="button"], .MuiIconButton-root {
+      cursor: pointer;
+  }
+}
+
 /* Smooth transitions for all interactive elements */
 a, button, .MuiCard-root {
   transition: all 0.3s ease-in-out !important;
@@ -96,4 +119,331 @@ a, button, .MuiCard-root {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(207, 31, 11);
+}
+
+.trail-particle {
+  pointer-events: none;
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 215, 0, 0.6);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  z-index: 9999;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.3) translateY(20px);
+  }
+}
+
+.trail-particle {
+  animation: fadeOut 0.6s ease-out forwards;
+}
+
+.trail-particle:nth-child(2n) {
+  background: rgba(231, 76, 60, 0.6);
+}
+
+.trail-particle:nth-child(3n) {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Sparkle Animations */
+@keyframes fall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(100px) translateX(var(--drift)) rotate(180deg) scale(0.8);
+  }
+  100% {
+    transform: translateY(200px) translateX(var(--drift)) rotate(360deg) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* Sparkle Container */
+.sparkle-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+
+/* Sparkle Element */
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.sparkle::before {
+  content: '✦';
+  position: absolute;
+  animation: twinkle 1s infinite;
+  color: gold;
+  font-size: 14px;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.sparkle:nth-child(2n)::before {
+  content: '✧';
+  color: #e74c3c;
+  font-size: 12px;
+  animation-delay: -0.3s;
+}
+
+.sparkle:nth-child(3n)::before {
+  content: '⋆';
+  color: white;
+  font-size: 16px;
+  animation-delay: -0.6s;
+}
+
+.sparkle:nth-child(4n)::before {
+  content: '✬';
+  color: #FFD700;
+  font-size: 13px;
+  animation-delay: -0.9s;
+}
+
+.sparkle:nth-child(5n)::before {
+  content: '★';
+  color: #FFA500;
+  font-size: 15px;
+  animation-delay: -0.4s;
+}
+
+.sparkle:nth-child(6n)::before {
+  content: '✯';
+  color: #FF69B4;
+  font-size: 14px;
+  animation-delay: -0.7s;
+}
+
+.sparkle:nth-child(7n)::before {
+  content: '✵';
+  color: #00CED1;
+  font-size: 13px;
+  animation-delay: -0.2s;
+}
+
+.sparkle:nth-child(8n)::before {
+  content: '✹';
+  color: #9370DB;
+  font-size: 15px;
+  animation-delay: -0.5s;
+}
+
+.sparkle:nth-child(9n)::before {
+  content: '✷';
+  color: #98FB98;
+  font-size: 14px;
+  animation-delay: -0.8s;
+}
+
+.sparkle:nth-child(10n)::before {
+  content: '❋';
+  color: #DDA0DD;
+  font-size: 16px;
+  animation-delay: -0.1s;
+}
+
+.sparkle::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(1px);
+  opacity: 0.5;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.sparkle:nth-child(3n) {
+  animation: spin 2s linear infinite;
+}
+
+.sparkle:nth-child(5n)::before {
+  animation: twinkle 1s infinite, pulse 1.5s infinite;
+}
+
+/* Falling animation patterns */
+@keyframes fallStraight {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(100px) scale(0.8);
+  }
+  100% {
+    transform: translateY(200px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fallSpiral {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(100px) rotate(360deg) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(200px) rotate(720deg) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fallZigzag {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(50px) translateX(30px) scale(0.9);
+  }
+  50% {
+    transform: translateY(100px) translateX(-30px) scale(0.8);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(150px) translateX(30px) scale(0.5);
+  }
+  100% {
+    transform: translateY(200px) translateX(-30px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fallSwirl {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  33% {
+    transform: translateY(70px) rotate(180deg) translateX(30px) scale(0.9);
+  }
+  66% {
+    transform: translateY(140px) rotate(360deg) translateX(-30px) scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(200px) rotate(540deg) translateX(0) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fallBounce {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(60px) scale(0.9);
+  }
+  50% {
+    transform: translateY(40px) scale(0.8);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(100px) scale(0.6);
+  }
+  100% {
+    transform: translateY(200px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fallFloat {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+  }
+  33% {
+    transform: translateY(70px) translateX(30px) scale(0.9);
+  }
+  66% {
+    transform: translateY(140px) translateX(-30px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(200px) translateX(30px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Enhanced sparkle animations */
+.sparkle:nth-child(6n+1) {
+  animation: fallSpiral 2s ease-out forwards;
+}
+
+.sparkle:nth-child(6n+2) {
+  animation: fallZigzag 2.2s ease-in-out forwards;
+}
+
+.sparkle:nth-child(6n+3) {
+  animation: fallSwirl 1.8s ease-in-out forwards;
+}
+
+.sparkle:nth-child(6n+4) {
+  animation: fallBounce 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.sparkle:nth-child(6n+5) {
+  animation: fallFloat 2.6s ease-in-out forwards;
+}
+
+.sparkle:nth-child(6n) {
+  animation: fallStraight 1.6s ease-out forwards;
+}
+
+/* Click Animation */
+.click-animation {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Add sparkle effect to clickable elements */
+a, button, [role="button"], .MuiIconButton-root {
+  position: relative;
+  overflow: visible;
+}
+
+/* Hover effect */
+a:hover, button:hover, [role="button"]:hover, .MuiIconButton-root:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* Active state glow */
+a:active, button:active, [role="button"]:active, .MuiIconButton-root:active {
+  transform: translateY(1px);
 }

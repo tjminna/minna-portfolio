@@ -319,6 +319,33 @@ function ContactForm() {
   );
 }
 
+function CursorSparkle() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  
+  useEffect(() => {
+    const updatePosition = (e) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    window.addEventListener('mousemove', updatePosition);
+    return () => window.removeEventListener('mousemove', updatePosition);
+  }, []);
+  
+  return (
+    <div
+      className="cursor-sparkle"
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      }}
+    >
+      <div className="sparkle"></div>
+      <div className="sparkle"></div>
+      <div className="sparkle"></div>
+    </div>
+  );
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [dataSet, setDataSet] = useState(0);
@@ -422,9 +449,144 @@ function App() {
     }
   ];
 
+  // Mouse trail effect
+  const createTrail = () => {
+    let lastTime = Date.now();
+    
+    const addTrailParticle = (e) => {
+      const currentTime = Date.now();
+      if (currentTime - lastTime < 30) return; // Limit rate
+      lastTime = currentTime;
+      
+      const particle = document.createElement('div');
+      particle.className = 'trail-particle';
+      
+      // Random offset from cursor
+      const offset = 10;
+      const randomX = (Math.random() - 0.5) * offset;
+      const randomY = (Math.random() - 0.5) * offset;
+      
+      particle.style.left = `${e.clientX + randomX}px`;
+      particle.style.top = `${e.clientY + randomY}px`;
+      
+      document.body.appendChild(particle);
+      
+      // Remove particle after animation
+      setTimeout(() => {
+        if (document.body.contains(particle)) {
+          document.body.removeChild(particle);
+        }
+      }, 600);
+    };
+    
+    // Add mousemove listener
+    document.addEventListener('mousemove', addTrailParticle);
+    
+    // Cleanup function
+    return () => {
+      document.removeEventListener('mousemove', addTrailParticle);
+      // Remove any remaining particles
+      const particles = document.querySelectorAll('.trail-particle');
+      particles.forEach(particle => {
+        if (document.body.contains(particle)) {
+          document.body.removeChild(particle);
+        }
+      });
+    };
+  };
+
+  // Sparkle click effect
+  const createSparkles = (e) => {
+    const clickX = e.clientX;
+    const clickY = e.clientY;
+    
+    // Create container
+    const container = document.createElement('div');
+    container.className = 'sparkle-container';
+    container.style.left = `${clickX}px`;
+    container.style.top = `${clickY}px`;
+    document.body.appendChild(container);
+    
+    // Create sparkles in multiple patterns
+    const patterns = [
+      { count: 8, delay: 0, radius: 20, angleOffset: 0 },    // Inner circle
+      { count: 12, delay: 100, radius: 35, angleOffset: 15 }, // Middle circle
+      { count: 16, delay: 200, radius: 50, angleOffset: 7.5 }  // Outer circle
+    ];
+    
+    patterns.forEach(({ count, delay, radius, angleOffset }) => {
+      setTimeout(() => {
+        for (let i = 0; i < count; i++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          
+          // Calculate position in circular pattern
+          const angle = ((i * (360 / count)) + angleOffset) * Math.PI / 180;
+          const distance = radius + (Math.random() * 10 - 5); // Add slight randomness
+          const startX = Math.cos(angle) * distance;
+          const startY = Math.sin(angle) * distance;
+          
+          // Set random drift for falling animation
+          const drift = (Math.random() - 0.5) * 100;
+          sparkle.style.setProperty('--drift', `${drift}px`);
+          
+          // Position sparkle
+          sparkle.style.left = `${startX}px`;
+          sparkle.style.top = `${startY}px`;
+          
+          container.appendChild(sparkle);
+        }
+      }, delay);
+    });
+    
+    // Create some random sparkles for variety
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        
+        // Random position within a larger radius
+        const angle = Math.random() * 360 * Math.PI / 180;
+        const distance = 30 + Math.random() * 40;
+        const startX = Math.cos(angle) * distance;
+        const startY = Math.sin(angle) * distance;
+        
+        const drift = (Math.random() - 0.5) * 150;
+        sparkle.style.setProperty('--drift', `${drift}px`);
+        
+        sparkle.style.left = `${startX}px`;
+        sparkle.style.top = `${startY}px`;
+        
+        container.appendChild(sparkle);
+      }, Math.random() * 300); // Random delay up to 300ms
+    };
+    
+    // Remove container after all animations complete
+    setTimeout(() => {
+      if (document.body.contains(container)) {
+        document.body.removeChild(container);
+      }
+    }, 3000);
+  };
+
+  // Add click listener
+  useEffect(() => {
+    document.addEventListener('click', createSparkles);
+    return () => {
+      document.removeEventListener('click', createSparkles);
+    };
+  }, []);
+
+  // Add trail effect
+  useEffect(() => {
+    const cleanup = createTrail();
+    return cleanup;
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <CursorSparkle />
       <Box
         sx={{
           position: 'fixed',
@@ -523,6 +685,7 @@ function App() {
                         backgroundColor: '#c0392b'
                       }
                     }}
+                    onClick={() => scrollToSection('projects')}
                   >
                     View My Work
                   </Button>
