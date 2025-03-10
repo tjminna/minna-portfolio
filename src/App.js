@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box, Container, Typography, Button, IconButton, Grid, Card, CardContent, List, ListItem, ListItemText } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import { motion } from 'framer-motion';
 import { useInView as useInViewObserver } from 'react-intersection-observer';
@@ -12,7 +11,6 @@ import CodeIcon from '@mui/icons-material/Code';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleIcon from '@mui/icons-material/People';
 import TextField from '@mui/material/TextField';
-import SendIcon from '@mui/icons-material/Send';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import TerminalIcon from '@mui/icons-material/Terminal';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
@@ -27,6 +25,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Tooltip from '@mui/material/Tooltip';
 import CssBaseline from '@mui/material/CssBaseline';
+import emailjs from '@emailjs/browser';
 
 const theme = createTheme({
   palette: {
@@ -106,6 +105,9 @@ function ContactForm() {
     message: ''
   });
 
+  const [status, setStatus] = useState('');
+  const form = useRef();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -115,12 +117,30 @@ function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can add your form submission logic
-    console.log('Form submitted:', formData);
+    setStatus('sending');
+
+    emailjs.sendForm(
+      'service_0btdxcc',
+      'template_56px6of',
+      e.target,
+      'CUMnU3bD-2ZdTgDyr'
+    )
+      .then((result) => {
+        setStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      }, (error) => {
+        setStatus('error');
+        console.error('Email sending failed:', error);
+      });
   };
 
   return (
     <form 
+      ref={form}
       onSubmit={handleSubmit}
       style={{ width: '100%', maxWidth: '500px', margin: '0 auto' }}
     >
@@ -258,7 +278,7 @@ function ContactForm() {
             color="inherit" 
             aria-label="LinkedIn" 
             component="a" 
-            href="[Your LinkedIn URL]" 
+            href="https://www.linkedin.com/in/minna-tj-3a622a1b3/" 
             target="_blank"
             sx={{
               color: 'rgba(255, 255, 255, 0.8)',
@@ -271,24 +291,9 @@ function ContactForm() {
           </IconButton>
           <IconButton 
             color="inherit" 
-            aria-label="GitHub" 
-            component="a" 
-            href="[Your GitHub URL]" 
-            target="_blank"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              '&:hover': {
-                color: 'rgba(231, 76, 60, 0.8)',
-              }
-            }}
-          >
-            <GitHubIcon />
-          </IconButton>
-          <IconButton 
-            color="inherit" 
             aria-label="Email" 
             component="a" 
-            href="mailto:your.email@example.com"
+            href="mailto:tjminna@gmail.com"
             sx={{
               color: 'rgba(255, 255, 255, 0.8)',
               '&:hover': {
@@ -299,21 +304,31 @@ function ContactForm() {
             <EmailIcon />
           </IconButton>
         </Box>
-        <Button
-          type="submit"
-          variant="contained"
-          endIcon={<SendIcon />}
-          sx={{
-            bgcolor: 'rgba(231, 76, 60, 0.8)',
-            '&:hover': {
-              bgcolor: 'rgba(231, 76, 60, 1)',
-            },
-            px: 4,
-            py: 1.5,
-          }}
-        >
-          Send Message
-        </Button>
+        <Box sx={{ mt: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={status === 'sending'}
+            sx={{
+              backgroundColor: 'rgba(231, 76, 60, 0.8)',
+              '&:hover': {
+                backgroundColor: 'rgba(231, 76, 60, 1)',
+              },
+              '&:disabled': {
+                backgroundColor: 'rgba(231, 76, 60, 0.4)',
+              }
+            }}
+          >
+            {status === 'sending' ? 'Sending...' : 'Send Message'}
+          </Button>
+          {status === 'success' && (
+            <Typography sx={{ color: 'green', mt: 1 }}>Message sent successfully!</Typography>
+          )}
+          {status === 'error' && (
+            <Typography sx={{ color: 'red', mt: 1 }}>Failed to send message. Please try again.</Typography>
+          )}
+        </Box>
       </Box>
     </form>
   );
@@ -661,8 +676,9 @@ function App() {
                       <ReactTyped
                         strings={[
                           'Business Analytics',
-                          'Data Engineering',
-                          'SAP BusinessObjects'
+                          'Data Analytics',
+                          'SAP BusinessObjects', 
+                          'Power BI',
                         ]}
                         typeSpeed={50}
                         backSpeed={30}
@@ -885,14 +901,13 @@ function App() {
                 >
                   <Typography variant="body1" paragraph>
                     I'm a passionate Project Engineer with expertise in SAP BusinessObjects, PowerBI, and advanced database tools. 
-                    Currently working at Wipro Limited, I specialize in developing and optimizing business intelligence solutions.
+                    Currently pursuing a Master's in Business Analytics in Indian Institute of Technology (ISM) Dhanbad, I specialize in developing and optimizing business intelligence solutions.
                   </Typography>
                   <Typography variant="body1" paragraph>
-                    With a Master's in Business Administration (Business Analytics) from Indian Institute of Technology and a Bachelor's in Information Technology,
-                    I combine technical expertise with business acumen to deliver impactful solutions.
+                    With a Bachelor's in Information Technology from Government College of Engineering Sreekrishnapuram, I combine technical expertise with business acumen to deliver impactful solutions.
                   </Typography>
                   <Typography variant="body1">
-                    Always learning and growing, I'm certified in Microsoft Power BI(PL-300) and Blockchain, thriving in dynamic settings.
+                    Always learning and growing, I'm certified in Microsoft Power BI(PL-300), thriving in dynamic settings.
                   </Typography>
                 </motion.div>
               </Grid>
@@ -1244,7 +1259,7 @@ function App() {
                       </Typography>
                       <Typography variant="body2" paragraph>
                         Developed Power BI reports, managed the integration between SQL Server database and Power BI.
-                        Enhanced data analysis capabilities through DAX formulas.
+                        Enhanced data analysis capabilities through DAX formulas. Implemented data visualization using Power BI.
                       </Typography>
                     </CardContent>
                   </Card>
@@ -1263,7 +1278,8 @@ function App() {
                         Autonomous Car Pooling System
                       </Typography>
                       <Typography variant="body2" paragraph>
-                        Built a blockchain-based carpooling platform using Ethereum and smart contracts.
+                        Built a blockchain-based carpooling platform using Ethereum and smart contracts. 
+                        Implemented user authentication and transaction management using Solidity and web3.js.
                       </Typography>
                     </CardContent>
                   </Card>
@@ -1317,7 +1333,7 @@ function App() {
               <SectionTitle>Achievements</SectionTitle>
             </motion.div>
             <Grid container spacing={4}>
-              <Grid item xs={12} md={6}>
+     {/*          <Grid item xs={12} md={6}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1354,7 +1370,7 @@ function App() {
                     </CardContent>
                   </Card>
                 </motion.div>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} md={6}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
