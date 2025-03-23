@@ -22,10 +22,18 @@ import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstruct
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import WorkIcon from '@mui/icons-material/Work';
+import ScienceIcon from '@mui/icons-material/Science';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Tooltip from '@mui/material/Tooltip';
 import CssBaseline from '@mui/material/CssBaseline';
 import emailjs from '@emailjs/browser';
+import { keyframes } from '@emotion/react';
+
+const floatAnimation = keyframes`
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+`;
 
 const theme = createTheme({
   palette: {
@@ -430,6 +438,7 @@ function App() {
     { id: 'about', icon: <PersonIcon />, label: 'About' },
     { id: 'skills', icon: <CodeIcon />, label: 'Skills' },
     { id: 'projects', icon: <WorkIcon />, label: 'Projects' },
+    { id: 'personal-projects', icon: <ScienceIcon />, label: 'Personal Projects' },
     { id: 'achievements', icon: <EmojiEventsIcon />, label: 'Achievements' },
     { id: 'contact', icon: <ContactMailIcon />, label: 'Contact' },
   ];
@@ -1288,6 +1297,102 @@ function App() {
             </Grid>
           </Container>
         </Box>
+
+
+        {/* Personal Projects Section */}
+        <Box id="personal-projects" className="snap-section" sx={{ 
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative',
+          py: 8,
+          overflow: 'hidden'
+        }}>
+          {/* Background Code Icons */}
+ {/* Gradient Circle - Top Left */}
+      <Box
+        sx={{
+          position: 'absolute',
+          width: '350px',
+          height: '350px',
+          borderRadius: '50%',
+          top: '-10%',
+          left: '-10%',
+          background: 'radial-gradient(circle, rgba(142,68,173,0.3), transparent)',
+          pointerEvents: 'none',
+          animation: `${floatAnimation} 6s ease-in-out infinite`,
+          zIndex: 0,
+        }}
+      />
+
+      {/* Gradient Circle - Bottom Right */}
+      <Box
+        sx={{
+          position: 'absolute',
+          width: '450px',
+          height: '450px',
+          borderRadius: '50%',
+          bottom: '-15%',
+          right: '-15%',
+          background: 'radial-gradient(circle, rgba(52,152,219,0.25), transparent)',
+          pointerEvents: 'none',
+          animation: `${floatAnimation} 8s ease-in-out infinite`,
+          zIndex: 0,
+        }}
+      />
+
+      {/* Diagonal Striped Pattern */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'repeating-linear-gradient(45deg, rgba(236,240,241,0.05) 0, rgba(236,240,241,0.05) 1px, transparent 1px, transparent 20px)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+          <Container sx={{ position: 'relative', zIndex: 1 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+            <SectionTitle>Personal Projects</SectionTitle>
+            </motion.div>
+            <Grid container spacing={4}>
+
+              {/* Chatbot for IIT ISM Dhanbad */}
+              <Grid item xs={12} md={6}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <Card elevation={3}>
+                    <CardContent>
+                      <Typography variant="h5" gutterBottom color="primary">
+                        Chatbot for IIT ISM Dhanbad
+                      </Typography>
+                      <Typography variant="body2" paragraph>
+                        Developed a chatbot using crewai, streamlit and python.
+                      </Typography>
+                      <Typography variant="body2" paragraph>
+                        Experience the chatbot in action <a target="_blank" rel="noopener noreferrer" href="https://crewai-chatbot.streamlit.app/">here</a>.
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </Grid>
+
+            </Grid>
+          </Container>
+        </Box>
+
 
         {/* Achievements Section */}
         <Box id="achievements" className="snap-section" sx={{ 
