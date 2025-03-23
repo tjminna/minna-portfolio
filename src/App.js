@@ -1389,6 +1389,30 @@ function App() {
                 </motion.div>
               </Grid>
 
+              {/* Akaike AI */}
+              <Grid item xs={12} md={6}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <Card elevation={3}>
+                    <CardContent>
+                      <Typography variant="h5" gutterBottom color="primary">
+                        Akaike AI
+                      </Typography>
+                      <Typography variant="body2" paragraph>
+                        Developed a News Summarization and Text-to-Speech Application using openai, murfai, streamlit and python as part of Akaike Assessment.
+                      </Typography>
+                      <Typography variant="body2" paragraph>
+                        Experience the application in action <a target="_blank" rel="noopener noreferrer" href="https://akaike-ai.streamlit.app/">here</a>.
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </Grid>
+
             </Grid>
           </Container>
         </Box>
