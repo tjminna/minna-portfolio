@@ -1389,9 +1389,36 @@ function App() {
                 </motion.div>
               </Grid>
 
+
+              {/* Weather Dashboard */}
+              <Grid item xs={12} md={6}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <Card elevation={3}>
+                    <CardContent>
+                      <Typography variant="h5" gutterBottom color="primary">
+                        Weather Dashboard
+                      </Typography>
+                      <Typography variant="body2" paragraph>
+                        Developed a Weather Dashboard using streamlit and python.
+                      </Typography>
+                      <Typography variant="body2" paragraph>
+                        Experience the Weather Dashboard in action <a target="_blank" rel="noopener noreferrer" href="https://minna-weather-dashboard.streamlit.app/">here</a>.
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </Grid>
+
             </Grid>
           </Container>
         </Box>
+
+
 
 
         {/* Achievements Section */}
